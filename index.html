@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>For You</title>
+    <style>
+         :root {
+            --bg: #f2f6f8;
+            /* page background */
+            --paper: #fffdf7;
+            /* paper color */
+            --accent: #174d07;
+            /* decorative color */
+            --frame: #efe9e0;
+            /* frame mat color */
+            --shadow: 0 10px 30px rgba(20, 20, 30, 0.12);
+            --paper-width: 760px;
+            --gutter: 28px;
+            --radius: 12px;
+            --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            --font-serif: "Georgia", "Times New Roman", serif;
+        }
+        /* page */
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: var(--font-sans);
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(155, 95, 182, 0.04), transparent 10%), radial-gradient(800px 400px at 90% 90%, rgba(155, 95, 182, 0.03), transparent 10%), var(--bg);
+            color: #111;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* outer layout */
+        
+        .wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 22px;
+            box-sizing: border-box;
+        }
+        
+        .gallery-layout {
+            display: grid;
+            grid-template-columns: 1fr var(--paper-width) 1fr;
+            gap: var(--gutter);
+            align-items: start;
+            width: 100%;
+            max-width: 1280px;
+        }
+        /* columns for frames */
+        
+        .frames {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: center;
+        }
+        
+        .frame {
+            width: 200px;
+            max-width: 22vw;
+            background: linear-gradient(#fff, #fff 60%, #fdfbf9);
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: 0 6px 18px rgba(20, 20, 30, 0.08);
+            border: 1px solid rgba(20, 20, 30, 0.05);
+            box-sizing: border-box;
+        }
+        
+        .mat {
+            background: var(--frame);
+            padding: 8px;
+            border-radius: 6px;
+            display: block;
+        }
+        
+        .mat img {
+            display: block;
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .caption {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #4a4a4a;
+            text-align: center;
+        }
+        /* center paper */
+        
+        .paper-wrap {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .paper {
+            width: 100%;
+            max-width: var(--paper-width);
+            background: var(--paper);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 46px 56px;
+            box-sizing: border-box;
+            border: 1px solid rgba(20, 20, 30, 0.04);
+            position: relative;
+            line-height: 1.6;
+        }
+        /* subtle paper texture lines */
+        
+        .paper::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: repeating-linear-gradient( to bottom, rgba(0, 0, 0, 0.01) 0px, rgba(0, 0, 0, 0.01) 1px, transparent 1px, transparent 20px);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            opacity: 0.6;
+        }
+        /* header */
+        
+        .paper h1 {
+            margin: 0 0 10px 0;
+            font-family: var(--font-serif);
+            font-size: 28px;
+            letter-spacing: 0.2px;
+            color: #2e2e2e;
+        }
+        
+        .paper .subtitle {
+            margin: 0 0 22px 0;
+            color: #6b6b6b;
+            font-size: 14px;
+        }
+        /* essay content */
+        
+        .essay {
+            font-family: var(--font-serif);
+            font-size: 17px;
+            color: #222;
+            white-space: pre-wrap;
+            /* maintain line breaks when you paste your essay */
+        }
+        
+        .t_essay {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            color: #222;
+            /* maintain line breaks when you paste your essay */
+        }
+        /* small decorative footer */
+        
+        .paper .footer {
+            margin-top: 26px;
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .logo .dot {
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(155, 95, 182, 0.25);
+        }
+        /* responsive */
+        
+        @media (max-width:1100px) {
+            .gallery-layout {
+                grid-template-columns: 0.9fr minmax(320px, 1fr) 0.9fr;
+                gap: 18px;
+            }
+            .frame {
+                width: 180px;
+            }
+        }
+        
+        @media (max-width:880px) {
+            .gallery-layout {
+                grid-template-columns: 1fr;
+            }
+            .frames {
+                flex-direction: row;
+                gap: 12px;
+                margin-bottom: 18px;
+                flex-wrap: nowrap;
+                overflow: auto;
+                padding-bottom: 8px;
+            }
+            .frame {
+                width: 180px;
+                flex: 0 0 180px;
+            }
+            .paper {
+                padding: 28px 22px;
+                margin: 0 10px;
+            }
+        }
+        /* small nicety for keyboard focus on images (if linked) */
+        
+        .mat a:focus img,
+        .mat img:focus {
+            outline: 3px solid rgba(155, 95, 182, 0.14);
+            outline-offset: 3px;
+        }
+        /* helper classes for making some frames slightly rotated for a "scrapbook" look */
+        
+        .frame.tilt-left {
+            transform: rotate(-1.5deg);
+        }
+        
+        .frame.tilt-right {
+            transform: rotate(1.5deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <!-- LEFT FRAMES -->
+        <!--<div class="frames" aria-hidden="false">
+                <figure class="frame tilt-left">
+                    <div class="mat">
+                        <img src="images/test.jpg" alt="You and me, December 2024" />
+                    </div>
+                    <figcaption class="caption">That trip to the lake</figcaption>
+                </figure>
+
+                <figure class="frame">
+                    <div class="mat">
+                        <img src="images/test.jpg" alt="Laughing together" />
+                    </div>
+                    <figcaption class="caption">Your laugh</figcaption>
+                </figure>
+
+                <figure class="frame tilt-right">
+                    <div class="mat">
+                        <img src="images/test.jpg" alt="A cozy night" />
+                    </div>
+                    <figcaption class="caption">Cozy night in</figcaption>
+                </figure>
+            </div>-->
+
+        <!-- CENTER PAPER -->
+        <div class="paper-wrap">
+            <article class="paper" aria-labelledby="title">
+                <header>
+                    <h1 id="title">For you</h1>
+                    <p class="subtitle">A little note, written with love from me to you.</p>
+                </header>
+
+                <div class="t_essay">
+                    Rylie,
+                </div>
+                <br>
+                <div class="t_essay">
+                    &nbsp;&nbsp;&nbsp;&nbsp; As we go into our 5th Christmas together, I have been thinking more and more about how much I appreciate you, and our relationship. Ever since we met in that Tim Hortons all those years ago, I felt a connection to you that I somehow
+                    just knew was going to be truly special, and boy, has it been.
+                </div>
+                <br>
+                <div class="t_essay">
+                    &nbsp;&nbsp;&nbsp;&nbsp; I find it hard sometimes to put my thoughts and feelings for you into writing. There are so many things about you I could talk about that I almost draw a blank, as if I am paralyzed by choices. I am so greatful that we have each
+                    other in this world. I am glad that I get to cuddle close with you on these cold winter nights, holding you and knowing that, in that moment, my life is nomore than the present with you, while also being the entirety of our future
+                    together.
+                </div>
+                <br>
+                <div class="t_essay">
+                    &nbsp;&nbsp;&nbsp;&nbsp; As you know, winter has always been my favourite season, but falling in love with you in the winter of 2021 made me love it even more. The cool air, the calm snow, the long nights, it all feels richer now because I get to experience
+                    those things that I love with you. The cold outside is the perfect contrast to the warmth of our love that fills this season in my heart. My life, like the winter temperatures feels at balance with you in it.
+                </div>
+                <br>
+                <div class="t_essay">
+                    &nbsp;&nbsp;&nbsp;&nbsp; Thank you for being my partner, my love, and my home. I feel so lucky to share my life with you, and I hope you always know just how much I cherish you. This winter, this Christmas, and forever, I am endlessly greatful for you.
+                </div>
+
+                <footer class="footer">
+                    <div class="logo">♥️ Blake Holt</div>
+                    <div class="date" aria-hidden="true">Christmas 2025</div>
+                </footer>
+            </article>
+        </div>
+
+        <!-- RIGHT FRAMES -->
+        <!--<div class="frames" aria-hidden="false">
+                <figure class="frame tilt-right">
+                    <div class="mat">
+                        <img src="images/test.jpg" alt="Holding hands" />
+                    </div>
+                    <figcaption class="caption">Holding hands</figcaption>
+                </figure>
+
+                <figure class="frame">
+                    <div class="mat">
+                        <img src="images/test.jpg" alt="A day out" />
+                    </div>
+                    <figcaption class="caption">That day out</figcaption>
+                </figure>
+
+                <figure class="frame tilt-left">
+                    <div class="mat">
+                        <img src="images/test.jpg" alt="Smiling at sunset" />
+                    </div>
+                    <figcaption class="caption">Sunset smile</figcaption>
+                </figure>
+            </div>-->
+
+    </div>
+</body>
+
+</html>
